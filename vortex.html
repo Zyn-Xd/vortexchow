@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vortex | Premium Delivery</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --black: #050505;
+        --black-light: #0a0a0a;
+        --black-lighter: #111111;
+        --white: #ffffff;
+        --gray: #666666;
+        --gray-dark: #333333;
+        --border: #1a1a1a;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--black);
+        color: var(--white);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(5, 5, 5, 0.8);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 5%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+      }
+
+      .nav-logo {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .nav-logo::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: var(--white);
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.3);
+          opacity: 0.5;
+        }
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-size: 14px;
+        color: var(--gray);
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: var(--white);
+      }
+
+      .nav-cta {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--gray-dark);
+        color: var(--white);
+      }
+
+      .btn-outline:hover {
+        border-color: var(--white);
+      }
+
+      .btn-primary {
+        background: var(--white);
+        color: var(--black);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+      }
+
+      .hamburger span {
+        width: 22px;
+        height: 2px;
+        background: var(--white);
+        transition: all 0.3s;
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 100px 5% 60px;
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(ellipse at center, #1a1a1a 0%, #050505 70%);
+      }
+
+      #particle-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        pointer-events: none;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 50px;
+        margin-bottom: 40px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        pointer-events: auto;
+      }
+
+      .hero-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: blink 2s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        letter-spacing: -3px;
+        opacity: 0;
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1rem, 1.8vw, 1.3rem);
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 40px;
+        max-width: 550px;
+        font-weight: 400;
+        pointer-events: auto;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+        pointer-events: auto;
+      }
+
+      .btn-hero-primary {
+        background: var(--white);
+        color: var(--black);
+        padding: 16px 32px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-hero-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
+      }
+
+      .btn-hero-secondary {
+        background: transparent;
+        color: var(--white);
+        padding: 16px 32px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-hero-secondary:hover {
+        border-color: var(--white);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: var(--gray);
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        animation: bounce 2s infinite;
+        z-index: 10;
+      }
+
+      .scroll-line {
+        width: 1px;
+        height: 50px;
+        background: linear-gradient(to bottom, var(--white), transparent);
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(8px);
+        }
+      }
+
+      /* STATS */
+      .stats {
+        background: var(--black-light);
+        padding: 50px 5%;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+      .stat-label {
+        font-size: 12px;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 100px 5%;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .section-tag {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--gray);
+        margin-bottom: 16px;
+        display: block;
+      }
+      .section-header h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -2px;
+      }
+      .section-header p {
+        color: var(--gray);
+        font-size: 16px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      /* CATEGORIES WITH IMAGES */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .category-card {
+        background: var(--black-lighter);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        display: block;
+      }
+
+      .category-card:hover {
+        border-color: var(--white);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .category-image-wrapper {
+        width: 100%;
+        height: 160px;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      }
+
+      .category-image-wrapper::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(5, 5, 5, 0.8) 100%
+        );
+        pointer-events: none;
+      }
+
+      .category-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .category-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .category-info {
+        padding: 20px;
+        text-align: center;
+      }
+
+      .category-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 6px;
+      }
+
+      .category-count {
+        font-size: 13px;
+        color: var(--gray);
+      }
+
+      /* HOW IT WORKS */
+      .how-bg {
+        background: var(--black-light);
+      }
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+      }
+
+      .step-card {
+        background: var(--black);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 32px 28px;
+        text-align: center;
+        transition: all 0.3s;
+      }
+
+      .step-card:hover {
+        border-color: var(--white);
+        transform: translateY(-6px);
+      }
+      .step-num {
+        width: 48px;
+        height: 48px;
+        background: var(--white);
+        color: var(--black);
+        border-radius: 50%;
+        font-size: 18px;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .step-icon {
+        font-size: 40px;
+        margin-bottom: 16px;
+        filter: grayscale(100%);
+      }
+      .step-card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .step-card p {
+        font-size: 14px;
+        color: var(--gray);
+        line-height: 1.6;
+      }
+
+      /* JOIN CARDS */
+      .join-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .join-card {
+        background: var(--black-lighter);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 36px 32px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-height: 280px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .join-card:hover {
+        border-color: var(--white);
+        transform: translateY(-6px);
+      }
+      .join-card-tag {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gray);
+      }
+      .join-card h3 {
+        font-size: 24px;
+        font-weight: 800;
+      }
+      .join-card p {
+        font-size: 14px;
+        color: var(--gray);
+        line-height: 1.6;
+      }
+      .join-card a {
+        margin-top: auto;
+        font-size: 14px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: gap 0.3s;
+      }
+      .join-card a:hover {
+        gap: 12px;
+      }
+      .join-card-emoji {
+        position: absolute;
+        right: 24px;
+        bottom: 24px;
+        font-size: 64px;
+        opacity: 0.08;
+        filter: grayscale(100%);
+      }
+
+      /* MARQUEE */
+      .features-band {
+        background: var(--white);
+        padding: 20px 0;
+        overflow: hidden;
+      }
+      .marquee-track {
+        display: flex;
+        gap: 50px;
+        white-space: nowrap;
+        animation: marquee 20s linear infinite;
+      }
+      .marquee-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--black);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .marquee-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--black);
+        border-radius: 50%;
+      }
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* APP */
+      .app-section {
+        background: var(--black-light);
+        padding: 100px 5%;
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .app-content {
+        flex: 1;
+        min-width: 280px;
+      }
+      .app-content h2 {
+        font-size: clamp(2rem, 3.5vw, 2.8rem);
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.2;
+        letter-spacing: -2px;
+      }
+      .app-content p {
+        color: var(--gray);
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 32px;
+        max-width: 420px;
+      }
+      .app-content strong {
+        color: var(--white);
+      }
+      .app-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .store-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--white);
+        color: var(--black);
+        padding: 14px 24px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .store-btn:hover {
+        transform: translateY(-3px);
+      }
+      .store-btn .store-icon {
+        font-size: 20px;
+      }
+      .store-btn div {
+        display: flex;
+        flex-direction: column;
+      }
+      .store-sub {
+        font-size: 10px;
+        opacity: 0.7;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .app-visual {
+        flex: 1;
+        min-width: 280px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .phone-mockup {
+        width: 260px;
+        height: 520px;
+        background: var(--black);
+        border-radius: 36px;
+        border: 6px solid var(--gray-dark);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+      }
+
+      .phone-notch {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 28px;
+        background: var(--black);
+        border-radius: 0 0 18px 18px;
+        z-index: 10;
+      }
+      .phone-screen {
+        flex: 1;
+        background: linear-gradient(
+          180deg,
+          var(--black-lighter) 0%,
+          var(--black) 100%
+        );
+        display: flex;
+        flex-direction: column;
+        padding-top: 36px;
+        height: 100%;
+      }
+      .phone-header {
+        padding: 16px 20px 12px;
+      }
+      .phone-header small {
+        font-size: 10px;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .phone-header h4 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-top: 4px;
+      }
+      .phone-search {
+        background: var(--black);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        margin: 0 16px;
+        padding: 10px 14px;
+        font-size: 12px;
+        color: var(--gray);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .phone-body {
+        padding: 16px;
+        flex: 1;
+      }
+      .phone-section-title {
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--white);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .phone-card {
+        background: var(--black-lighter);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 10px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-size: 11px;
+        transition: all 0.3s;
+      }
+
+      .phone-card:hover {
+        border-color: var(--white);
+        transform: translateX(4px);
+      }
+      .phone-card-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+        background: var(--black);
+        border: 1px solid var(--border);
+      }
+      .phone-card-name {
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 2px;
+        font-size: 13px;
+      }
+      .phone-card-info {
+        color: var(--gray);
+        font-size: 10px;
+      }
+      .phone-card-rating {
+        color: var(--white);
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      /* FAQS */
+      .faq-list {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .faq-item {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        background: var(--black-lighter);
+        transition: all 0.3s;
+      }
+      .faq-item:hover {
+        border-color: var(--gray-dark);
+      }
+      .faq-question {
+        padding: 20px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s;
+      }
+      .faq-icon {
+        font-size: 20px;
+        font-weight: 300;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        transition: all 0.3s;
+      }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        font-size: 14px;
+        color: var(--gray);
+        line-height: 1.7;
+        background: var(--black);
+        padding: 0 24px;
+      }
+      .faq-answer.open {
+        max-height: 250px;
+        padding: 0 24px 20px;
+      }
+      .faq-item.open {
+        border-color: var(--white);
+      }
+      .faq-item.open .faq-icon {
+        transform: rotate(45deg);
+        background: var(--white);
+        color: var(--black);
+        border-color: var(--white);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--black);
+        padding: 80px 5% 32px;
+        border-top: 1px solid var(--border);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr repeat(3, 1fr);
+        gap: 40px;
+        margin-bottom: 60px;
+      }
+      .footer-brand h3 {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 16px;
+      }
+      .footer-brand p {
+        font-size: 14px;
+        color: var(--gray);
+        line-height: 1.7;
+        margin-bottom: 24px;
+        max-width: 280px;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 10px;
+      }
+      .newsletter-form input {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--black-lighter);
+        color: var(--white);
+        font-size: 14px;
+        outline: none;
+      }
+      .newsletter-form input::placeholder {
+        color: var(--gray);
+      }
+      .newsletter-form button {
+        padding: 12px 20px;
+        background: var(--white);
+        color: var(--black);
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .newsletter-form button:hover {
+        opacity: 0.9;
+      }
+
+      .footer-col h4 {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .footer-col ul {
+        list-style: none;
+      }
+      .footer-col ul li {
+        margin-bottom: 12px;
+      }
+      .footer-col ul li a {
+        font-size: 14px;
+        color: var(--gray);
+        transition: all 0.3s;
+        display: inline-block;
+      }
+      .footer-col ul li a:hover {
+        color: var(--white);
+        transform: translateX(4px);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid var(--border);
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 13px;
+        color: var(--gray);
+      }
+      .social-links {
+        display: flex;
+        gap: 20px;
+      }
+      .social-links a {
+        color: var(--gray);
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: color 0.3s;
+      }
+      .social-links a:hover {
+        color: var(--white);
+      }
+
+      /* MOBILE */
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: var(--black);
+        border-bottom: 1px solid var(--border);
+        padding: 24px 5%;
+        gap: 16px;
+        z-index: 999;
+      }
+
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-size: 16px;
+        color: var(--white);
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      @media (max-width: 900px) {
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .app-section {
+          flex-direction: column;
+          text-align: center;
+        }
+        .app-content p {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .app-buttons {
+          justify-content: center;
+        }
+        .categories-grid {
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        }
+      }
+
+      @media (max-width: 600px) {
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+        .hero-actions button {
+          width: 100%;
+        }
+        .category-image-wrapper {
+          height: 140px;
+        }
+      }
+    </style>
+    <base target="_blank" />
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="nav-logo">vortex</a>
+      <ul class="nav-links">
+        <li><a href="#">Customers</a></li>
+        <li><a href="#">Vendors</a></li>
+        <li><a href="#">Riders</a></li>
+        <li><a href="#">Vortex Pass</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#" class="btn btn-outline">Log in</a>
+        <a href="#" class="btn btn-primary">Order now</a>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#">Customers</a>
+      <a href="#">Vendors</a>
+      <a href="#">Riders</a>
+      <a
+        href="#"
+        class="btn btn-primary"
+        style="margin-top: 8px; text-align: center"
+        >Order now</a
+      >
+    </div>
+
+    <section class="hero">
+      <canvas id="particle-canvas"></canvas>
+
+      <div class="hero-content">
+        <div class="hero-badge">Now Serving Nationwide</div>
+        <h1 id="hero-title">Have you eaten?</h1>
+        <p class="hero-subtitle">
+          Experience premium food delivery. Curated restaurants, elite riders,
+          zero compromises.
+        </p>
+
+        <div class="hero-actions">
+          <button
+            class="btn-hero-primary"
+            onclick="scrollToSection('categories')"
+          >
+            Order now →
+          </button>
+          <button class="btn-hero-secondary" onclick="scrollToSection('how')">
+            How it works
+          </button>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-num" id="s1">0</div>
+        <div class="stat-label">Partner Venues</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="s2">0</div>
+        <div class="stat-label">Active Users</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="s3">0</div>
+        <div class="stat-label">Deliveries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="s4">0</div>
+        <div class="stat-label">Cities</div>
+      </div>
+    </div>
+
+    <div class="features-band">
+      <div class="marquee-track">
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Premium Selection</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>15-Min Delivery</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Live Tracking</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>24/7 Support</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Elite Riders</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Secure Payments</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Premium Selection</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>15-Min Delivery</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Live Tracking</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>24/7 Support</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Elite Riders</span
+        >
+        <span class="marquee-item"
+          ><span class="marquee-dot"></span>Secure Payments</span
+        >
+      </div>
+    </div>
+
+    <!-- CATEGORIES WITH IMAGE LINKS -->
+    <!-- Replace the src URLs with your Dropbox links (change dl=0 to raw=1) -->
+    <section class="section" id="categories">
+      <div class="section-header">
+        <span class="section-tag">Browse Categories</span>
+        <h2>What are you craving?</h2>
+        <p>
+          From gourmet African cuisine to international flavors — we deliver
+          excellence.
+        </p>
+      </div>
+      <div class="categories-grid">
+        <a href="/category/african" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop"
+              alt="African Food"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">African</div>
+            <div class="category-count">120+ restaurants</div>
+          </div>
+        </a>
+
+        <a href="/category/fast-food" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop"
+              alt="Fast Food"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Fast Food</div>
+            <div class="category-count">85+ restaurants</div>
+          </div>
+        </a>
+
+        <a href="/category/pizza" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop"
+              alt="Pizza"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Pizza</div>
+            <div class="category-count">45+ restaurants</div>
+          </div>
+        </a>
+
+        <a href="/category/healthy" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop"
+              alt="Healthy Food"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Healthy</div>
+            <div class="category-count">60+ restaurants</div>
+          </div>
+        </a>
+
+        <a href="/category/asian" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&h=300&fit=crop"
+              alt="Asian Food"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Asian</div>
+            <div class="category-count">55+ restaurants</div>
+          </div>
+        </a>
+
+        <a href="/category/pastries" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&h=300&fit=crop"
+              alt="Pastries"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Pastries</div>
+            <div class="category-count">40+ bakeries</div>
+          </div>
+        </a>
+
+        <a href="/category/beverages" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=300&fit=crop"
+              alt="Beverages"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Beverages</div>
+            <div class="category-count">90+ vendors</div>
+          </div>
+        </a>
+
+        <a href="/category/groceries" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop"
+              alt="Groceries"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Groceries</div>
+            <div class="category-count">35+ stores</div>
+          </div>
+        </a>
+
+        <a href="/category/pharmacy" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop"
+              alt="Pharmacy"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Pharmacy</div>
+            <div class="category-count">25+ pharmacies</div>
+          </div>
+        </a>
+
+        <a href="/category/breakfast" class="category-card">
+          <div class="category-image-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1533089862017-5614ecb352ae?w=400&h=300&fit=crop"
+              alt="Breakfast"
+              loading="lazy"
+            />
+          </div>
+          <div class="category-info">
+            <div class="category-name">Breakfast</div>
+            <div class="category-count">50+ cafes</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section how-bg" id="how">
+      <div class="section-header">
+        <span class="section-tag">How It Works</span>
+        <h2>Three steps to satisfaction</h2>
+        <p>Seamless ordering designed for the modern lifestyle.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-icon">📱</div>
+          <h3>Download Vortex</h3>
+          <p>Get the app on iOS or Android. Create your account in seconds.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-icon">🔍</div>
+          <h3>Discover & Select</h3>
+          <p>
+            Browse curated restaurants. Filter by cuisine, ratings, or time.
+          </p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-icon">⚡</div>
+          <h3>Swift Delivery</h3>
+          <p>
+            Checkout securely, track in real-time, enjoy contactless delivery.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <span class="section-tag">Join The Network</span>
+        <h2>Grow with Vortex</h2>
+        <p>Partner with Nigeria's most premium delivery platform.</p>
+      </div>
+      <div class="join-grid">
+        <div class="join-card">
+          <div class="join-card-tag">For Restaurants</div>
+          <h3>Expand Your Reach</h3>
+          <p>
+            Connect with thousands of discerning customers. Our platform puts
+            your cuisine in the spotlight.
+          </p>
+          <a href="#">Become a Partner →</a>
+          <div class="join-card-emoji">🏪</div>
+        </div>
+        <div class="join-card">
+          <div class="join-card-tag">For Riders</div>
+          <h3>Elite Fleet</h3>
+          <p>
+            Join our professional rider network. Earn competitive income with
+            flexible hours.
+          </p>
+          <a href="#">Apply Now →</a>
+          <div class="join-card-emoji">🛵</div>
+        </div>
+        <div class="join-card">
+          <div class="join-card-tag">Careers</div>
+          <h3>Build The Future</h3>
+          <p>
+            We're hiring exceptional talent. Join a world-class team
+            revolutionizing logistics.
+          </p>
+          <a href="#">View Openings →</a>
+          <div class="join-card-emoji">💼</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-section">
+      <div class="app-content">
+        <span class="section-tag" style="margin-bottom: 12px; display: block"
+          >Get The App</span
+        >
+        <h2>Excellence in your pocket</h2>
+        <p>
+          Download Vortex and transform how you experience food delivery. Use
+          code <strong>VORTEX300</strong> for ₦300 off your first order.
+        </p>
+        <div class="app-buttons">
+          <a href="#" class="store-btn">
+            <span class="store-icon">▶</span>
+            <div>
+              <span class="store-sub">Get it on</span><span>Google Play</span>
+            </div>
+          </a>
+          <a href="#" class="store-btn">
+            <span class="store-icon">🍎</span>
+            <div>
+              <span class="store-sub">Download on</span><span>App Store</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="app-visual">
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-header">
+              <small>📍 Lagos, Nigeria</small>
+              <h4>Good evening</h4>
+            </div>
+            <div class="phone-search">🔍 Search restaurants...</div>
+            <div class="phone-body">
+              <div class="phone-section-title">Popular Now</div>
+              <div class="phone-card">
+                <div class="phone-card-img">🍛</div>
+                <div>
+                  <div class="phone-card-name">The Place</div>
+                  <div class="phone-card-info">20–30 min • Free</div>
+                  <div class="phone-card-rating">★ 4.9</div>
+                </div>
+              </div>
+              <div class="phone-card">
+                <div class="phone-card-img">🍔</div>
+                <div>
+                  <div class="phone-card-name">Burger King</div>
+                  <div class="phone-card-info">15–25 min • ₦150</div>
+                  <div class="phone-card-rating">★ 4.7</div>
+                </div>
+              </div>
+              <div class="phone-card">
+                <div class="phone-card-img">🍕</div>
+                <div>
+                  <div class="phone-card-name">Domino's</div>
+                  <div class="phone-card-info">25–35 min • ₦250</div>
+                  <div class="phone-card-rating">★ 4.8</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section how-bg" id="faqs">
+      <div class="section-header">
+        <span class="section-tag">Support</span>
+        <h2>Frequently Asked</h2>
+        <p>Everything you need to know about the Vortex experience.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            How do I place an order on Vortex?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Download the Vortex app, create an account, browse restaurants near
+            you, add items to your cart, and checkout. Your order will be
+            confirmed instantly.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            What cities does Vortex operate in?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Vortex currently operates in Lagos, Abuja, Port Harcourt, Ibadan,
+            and Kano. We're rapidly expanding to new cities across Nigeria.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            How does live order tracking work?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Once your order is confirmed, track your rider's location in
+            real-time on the map. You'll receive updates at every stage.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Can I order groceries and pharmacy items?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Absolutely. Vortex delivers more than food. Order fresh groceries,
+            household essentials, and pharmacy supplies from verified vendors.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>vortex</h3>
+          <p>
+            Nigeria's premium delivery platform. Connecting exceptional
+            restaurants with discerning customers.
+          </p>
+          <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Food Delivery</a></li>
+            <li><a href="#">Grocery</a></li>
+            <li><a href="#">Pharmacy</a></li>
+            <li><a href="#">Vortex Pass</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2024 Vortex Logistics Ltd. All rights reserved.</span>
+        <div class="social-links">
+          <a href="#">Twitter</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu
+      function toggleMenu() {
+        document.getElementById("mobileMenu").classList.toggle("open");
+      }
+
+      // FAQ toggle
+      function toggleFaq(el) {
+        const item = el.parentElement;
+        const answer = el.nextElementSibling;
+        const isOpen = answer.classList.contains("open");
+        document
+          .querySelectorAll(".faq-answer")
+          .forEach((a) => a.classList.remove("open"));
+        document
+          .querySelectorAll(".faq-item")
+          .forEach((i) => i.classList.remove("open"));
+        if (!isOpen) {
+          answer.classList.add("open");
+          item.classList.add("open");
+        }
+      }
+
+      // Newsletter
+      function subscribeNewsletter(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector("button");
+        btn.textContent = "Subscribed ✓";
+        setTimeout(() => {
+          btn.textContent = "Subscribe";
+          e.target.reset();
+        }, 3000);
+      }
+
+      function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Stats counter
+      const targets = [
+        { id: "s1", end: 2000, suffix: "+" },
+        { id: "s2", end: 750, suffix: "K+" },
+        { id: "s3", end: 3, suffix: "M+" },
+        { id: "s4", end: 15, suffix: "+" },
+      ];
+
+      function animateCounters() {
+        targets.forEach(({ id, end, suffix }) => {
+          const el = document.getElementById(id);
+          let current = 0;
+          const step = end / 60;
+          const timer = setInterval(() => {
+            current = Math.min(current + step, end);
+            el.textContent = Math.floor(current).toLocaleString() + suffix;
+            if (current >= end) clearInterval(timer);
+          }, 30);
+        });
+      }
+
+      const statsObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            animateCounters();
+            statsObserver.disconnect();
+          }
+        },
+        { threshold: 0.3 }
+      );
+
+      statsObserver.observe(document.querySelector(".stats"));
+
+      // ============================================
+      // IMPROVED VISIBLE PARTICLE TEXT EFFECT
+      // ============================================
+
+      const canvas = document.getElementById("particle-canvas");
+      const ctx = canvas.getContext("2d");
+
+      let particles = [];
+      let mouse = { x: null, y: null, radius: 120 };
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+      }
+
+      class Particle {
+        constructor(x, y) {
+          // start scattered but closer (less chaos)
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+
+          this.baseX = x;
+          this.baseY = y;
+
+          this.size = 1.4;
+          this.vx = 0;
+          this.vy = 0;
+        }
+
+        update() {
+          // smoother return force (reduced = less shake)
+          const dx = this.baseX - this.x;
+          const dy = this.baseY - this.y;
+
+          this.vx += dx * 0.01;
+          this.vy += dy * 0.01;
+
+          // mouse repel (softer + larger radius feel)
+          if (mouse.x !== null && mouse.y !== null) {
+            const mx = this.x - mouse.x;
+            const my = this.y - mouse.y;
+            const dist = Math.sqrt(mx * mx + my * my);
+
+            if (dist < mouse.radius) {
+              const force = (mouse.radius - dist) / mouse.radius;
+              const angle = Math.atan2(my, mx);
+
+              this.vx += Math.cos(angle) * force * 3; // reduced from 6
+              this.vy += Math.sin(angle) * force * 3;
+            }
+          }
+
+          // stronger damping = less jitter
+          this.vx *= 0.88;
+          this.vy *= 0.88;
+
+          this.x += this.vx;
+          this.y += this.vy;
+        }
+
+        draw() {
+          ctx.fillStyle = "white";
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function initParticles() {
+        particles = [];
+
+        const text = "Have you eaten?";
+        const fontSize = Math.min(window.innerWidth * 0.1, 100);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = `900 ${fontSize}px Inter`;
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2 - 40;
+
+        ctx.fillText(text, centerX, centerY);
+
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let y = 0; y < canvas.height; y += 4) {
+          for (let x = 0; x < canvas.width; x += 4) {
+            const index = (y * canvas.width + x) * 4;
+            if (data[index + 3] > 128) {
+              particles.push(new Particle(x, y));
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.fillStyle = "rgba(5,5,5,0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      // mouse
+      canvas.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+
+      canvas.addEventListener("mouseleave", () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+
+      // touch
+      canvas.addEventListener("touchmove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.touches[0].clientX - rect.left;
+        mouse.y = e.touches[0].clientY - rect.top;
+      });
+
+      canvas.addEventListener("touchend", () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+
+      resizeCanvas();
+      animate();
+      window.addEventListener("resize", resizeCanvas);
+    </script>
+  </body>
+</html>
